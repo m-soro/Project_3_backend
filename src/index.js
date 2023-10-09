@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 import { userRouter } from "./routes/users.js";
+import { mountainRouter } from "./routes/mountains.js";
 
 const app = express();
 
@@ -25,5 +26,6 @@ app.use(cors());
 
 // AUTHENTICATION ROUTE
 app.use("/auth", userRouter);
+app.use("/mountain", mountainRouter);
 
 app.listen(3001, () => console.log("listening"));
