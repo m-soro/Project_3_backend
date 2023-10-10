@@ -8,7 +8,7 @@ const router = express.Router();
 
 // INDUCES
 
-// retrun all the saved mountain
+// INDEX
 router.get("/", async (req, res) => {
   try {
     const response = await MountainModel.find({});
@@ -62,6 +62,32 @@ router.get("/savedMountains", async (req, res) => {
     res.json({ savedMountains: user?.savedMountains });
   } catch (error) {
     res.json(error);
+  }
+});
+
+// Route for update book - endpoint working tested in postman
+router.put("/update/:id", async (request, response) => {
+  try {
+    const { id } = request.params;
+    const result = await MountainModel.findByIdAndUpdate(id, request.body);
+    if (!result) {
+      return response.status(404).json({ message: "List not found" });
+    }
+    return response.status(200).json({ message: "List updated successfully" });
+  } catch (error) {
+    console.log(error.message);
+    response.status(500).send({ message: error.message });
+  }
+});
+
+// Delete Route - endpoint working tested in postman
+router.delete("/delete/:id", async (req, res) => {
+  try {
+    await MountainModel.findByIdAndRemove(req.params.id);
+    console.log("successfully deleted");
+    // res.redirect("/"); // redirect back to index
+  } catch (error) {
+    console.log(error);
   }
 });
 
