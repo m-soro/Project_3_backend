@@ -52,20 +52,47 @@ router.get("/savedMountains/ids/:userID", async (req, res) => {
   }
 });
 
-router.get("/savedMountains", async (req, res) => {
+// router.get("/savedMountains", async (req, res) => {
+//   try {
+//     const user = await UserModel.findById(req.body.userID);
+//     const savedMountains = await MountainModel.find({
+//       // grab the savedMountains where the id is inside the user savedMountains
+//       _id: { $in: user.savedMountains },
+//     });
+//     res.json({ savedMountains: user?.savedMountains });
+//   } catch (error) {
+//     res.json(error);
+//   }
+// });
+
+router.get("/update/:id", async (req, res) => {
   try {
-    const user = await UserModel.findById(req.body.userID);
-    const savedMountains = await MountainModel.find({
-      // grab the savedMountains where the id is inside the user savedMountains
-      _id: { $in: user.savedMountains },
+    const foundMountain = await MountainModel.findById(req.params.id);
+    res.json({
+      message: foundMountain,
     });
-    res.json({ savedMountains: user?.savedMountains });
   } catch (error) {
-    res.json(error);
+    console.log(error);
   }
 });
 
-// Route for update book - endpoint working tested in postman
+// edit route
+// router.get("/update/:id", async (request, response) => {
+//   try {
+//     const { id } = request.params;
+//     const result = await MountainModel.findByIdAndUpdate(id, request.body);
+//     if (!result) {
+//       return response.status(404).json({ message: "List not found" });
+//     }
+//     return response.status(200).json({ message: "List updated successfully" });
+//   } catch (error) {
+//     console.log(error.message);
+//     response.status(500).send({ message: error.message });
+//   }
+// });
+
+// Route for update - endpoint working tested in postman
+// this is the submit button in the form
 router.put("/update/:id", async (request, response) => {
   try {
     const { id } = request.params;
@@ -82,10 +109,10 @@ router.put("/update/:id", async (request, response) => {
 
 // Delete Route - endpoint working tested in postman
 router.delete("/delete/:id", async (req, res) => {
+  console.log(req.params.id);
   try {
     await MountainModel.findByIdAndRemove(req.params.id);
-    console.log("successfully deleted");
-    // res.redirect("/"); // redirect back to index
+    res.json({ message: "Successfully deleted" });
   } catch (error) {
     console.log(error);
   }
