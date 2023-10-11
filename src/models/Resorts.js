@@ -4,7 +4,6 @@ const MountainSchema = new mongoose.Schema({
   listName: {
     type: String,
     required: true,
-    unique: true,
   },
   mountains: [{ type: String, required: true }],
   userOwner: {
