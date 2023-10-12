@@ -4,6 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "type": "module",
+  "engines": {
+    "node": ">=14.20.1"
+  },
   "scripts": {
     "start": "nodemon src/index.js",
     "build": "npm i"
